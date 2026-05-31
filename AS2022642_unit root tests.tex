@@ -1,0 +1,198 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+
+\doublespacing \setlength{\parindent}{1in}
+
+\title{Evolution of Unit Root Tests and Different Types}
+\author{Y.M.A.P.Rajapaksha (AS2022642)}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction}
+	
+	Time series analysis plays a very important role in many fields, such as economics, finance, and weather forecasting. When dealing with time series data, we often encounter two special terms: \textit{stationary} and \textit{non-stationary series}. A time series with a constant mean, variance, etc., over time is called a stationary time series. This property is very important in time series analysis for making accurate statistical inferences. A non-stationary time series often contains a unit root.
+	
+	\vspace{0.75cm}
+	
+	Over the years, researchers have developed various parametric and non-parametric tests for testing stationarity. These statistical tests are called \textit{unit root tests}. There are different types of unit root tests for different situations. These various tests address situations such as serial correlation, seasonal patterns, structural breaks, panel data structures, etc. This report reviews the different types of unit root tests and their uses.
+	
+
+	
+	\section{Types of Unit Root Tests}
+	
+	\subsection{Dickey-Fuller (DF) Test}
+	
+	The development of modern unit root tests began with the introduction of the Dickey-Fuller test in 1979 by David A. Dickey and Wayne A. Fuller. This test is based on the AR(1) process (Dickey and Fuller, 1979). The autoregressive model of the DF test can be expressed as
+	
+	\[
+	Y_t = \rho Y_{t-1} + e_t, \qquad t = 1,2,\ldots
+	\]
+	
+	
+	\noindent where \(Y_0 = 0\), \(\rho\) is a real number and \(\{e_t\}\) is a sequence of independent normal random variables with mean zero and variance \(\sigma^2\).
+	
+	\vspace{0.75cm}
+	
+	The behavior of the process depends on the value of \(\rho\):
+	
+	\begin{itemize}
+		\item If the coefficient \(\rho\) is less than 1 in absolute value (\(|\rho| < 1\)), the series settles down and becomes stationary over time.
+		
+		\item If \(\rho = 1\), the series is not stationary. Its variance grows with time (\(t\sigma^2\)), and this case is called a random walk.
+		
+		\item If \(|\rho| > 1\), the series is also not stationary, and its variance grows exponentially as time increases.
+	\end{itemize}
+	
+	
+	\subsection{Augmented Dickey-Fuller (ADF) Test}
+	
+	ADF test was introduced as an alternative to the Dickey-Fuller test. It is developed based on the Dickey-Fuller test by adding the previous lagged value of the dependent variable. In other words, it is based on the ARMA$(p,q)$ process. The ADF test estimates the following regression equation to test the null hypothesis of the existence of a unit root, and when a unit root is present it indicates that the time series can be made stationary by differencing (Said and Dickey, 1984). The regression equation of the ADF test can be defined as follows:
+	
+	\[
+		Y_t = \beta' D_t + \delta Y_{t-1} + \sum_{i=1}^{p-1} \alpha_i \Delta Y_{t-i} + \epsilon_t
+	\]
+	
+	\noindent where \(Y_t\) is the variable of interest, \(D_t\) is a vector consisting of deterministic terms (constant, trend, etc.), \(p\) is the number of lags, \(\Delta Y_{t-i}\) are the lagged difference terms, and \(\epsilon_t\) is the error term.
+	
+	\[
+		Test\ Statistic =
+		\frac{\hat{\delta}-1}
+		{S.E.(\hat{\delta})}
+	\]
+	
+	The results of the ADF test are sensitive to the choice of the truncation lag of the general autoregressive moving average model. Therefore, a sequential lag selection procedure, where testing for the significance of additional lag terms is performed, was followed to decide the number of lags in the ADF test. This approach is preferred over information criteria such as AIC and BIC (Serena and Perron, 1995). To select the starting lag of the sequential lag selection procedure, the lag length suggested by Schwert (2002) was used, which is shown in the following equation, where \(T\) is the length of the time series:
+	
+	\[
+		Starting\ Lag
+		=
+		12 \times
+		\left(
+		\frac{T}{100}
+		\right)^{\frac{1}{4}}
+	\]
+
+\subsection{Phillips–Perron (PP) Test}
+
+The Phillips--Perron (PP) test, developed by Phillips and Perron (1988), is a unit root test used in time series analysis. This is especially used in finance. It is similar in purpose to the Augmented Dickey--Fuller (ADF) test, but differs in how it handles serial correlation and heteroskedasticity in the errors. The regression equation of the PP test is,
+
+\[
+\Delta y_t = \beta_0 D_t + \pi y_{t-1} + u_t
+\]
+
+\noindent Where $u_t$ is $I(0)$ and may be heteroskedastic.
+
+\vspace{0.75cm}
+
+In particular, the ADF test uses a parametric autoregressive approach by adding lagged difference terms to approximate the ARMA structure of the error term in the test regression. In contrast, the Phillips-Perron (PP) test does not include additional lag terms. Instead, it applies a non-parametric correction to the test statistics to account for serial correlation and heteroskedasticity.
+
+\subsection{Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test}
+
+Another commonly used stationarity test is the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test, which was introduced by Kwiatkowski, Phillips, Schmidt and Shin (1992). This test was derived by starting the model,
+
+\vspace{-0.75cm}
+
+\[
+	y_t = \beta_0 D_t + \mu_t + u_t 
+\]
+
+\vspace{-1.5cm}
+
+\[	
+	\mu_t = \mu_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim WN(0,\sigma^2_{\varepsilon})
+\]
+where $D_t$ contains deterministic components, $u_t$ is $I(0)$ and may be heteroskedastic.
+
+\vspace{0.75cm}
+
+The KPSS test statistic is the Lagrange multiplier (LM) or score statistic for testing $\sigma^2_{\varepsilon} = 0$ against the alternative that $\sigma^2_{\varepsilon} > 0$ and is given by,
+
+\[
+	KPSS = \frac{T^{-2} \sum_{t=1}^{T} \hat{S}_t^2}{\hat{\lambda}^2}
+\]
+
+\noindent where $\hat{S}_t = \sum_{j=1}^{t} \hat{u}_j,$
+$\hat{u}_t$ is the residual from regressing $y_t$ on $D_t$, and $\hat{\lambda}^2$ is a consistent estimate of the long run variance of $u_t$, obtained using the residuals $\hat{u}_t$.
+
+\vspace{0.75cm}
+
+Interpretation of the KPSS test is opposite of the ADF test and PP test since the KPSS test reverses the hypotheses:
+
+\begin{itemize}
+	\item Null hypothesis: The series is stationary.
+	\item Alternative hypothesis: The series contains a unit root.
+\end{itemize}
+
+\noindent Therefore, in normal practice, the KPSS test is used together with the ADF or PP test for accurate conclusions.
+
+\subsection{Hylleberg-Engle-Granger-Yoo (HEGY) Test}
+
+The HEGY test for seasonal unit roots was developed by Hylleberg, Engle, Granger, and Yoo for quarterly data as an alternative to the DHF seasonal unit root test (Hylleberg et al., 1990) because of the restrictive assumptions of that test, namely that the root of interest has a modulus of exactly one and that there are no other unit roots in the system other than the root of interest (Dickey et al., 1984). Since the original HEGY test was developed specifically for quarterly data, Joseph Beaulieu and Jeffery A. Miron extended the HEGY test for application to monthly data (Beaulieu and Miron, 1993).
+
+\vspace{0.75cm}
+
+ Consider a data-generating process described by the general autoregressive equation \(\phi(B)x_t=\epsilon_t\), where \(\phi(B)\) is the backshift operator and \(\epsilon_t\) is white noise. The HEGY test examines whether \(\phi(B)\) contains unit roots at seasonal frequencies. When testing the null hypothesis of a seasonal unit root at a particular frequency, the HEGY test ignores the possible existence of unit roots at other frequencies. 
+ 
+ \vspace{0.75cm}
+ 
+ For a monthly series, the seasonal unit roots are \(1\), \(\pm i\), \(\frac{1}{2}(1 \pm i\sqrt{3})\), \(\frac{1}{2}(-1 \pm i\sqrt{3})\), \(\frac{1}{2}(\sqrt{3} \pm i)\), and \(\frac{1}{2}(-\sqrt{3} \pm i)\), which correspond to 6, 3, 9, 8, 4, 2, 10, 7, 5, 1, and 11 cycles per year, respectively. The corresponding seasonal frequencies are \(\pi\), \(\pm\frac{\pi}{2}\), \(\pm\frac{2\pi}{3}\), \(\pm\frac{\pi}{3}\), \(\pm\frac{5\pi}{6}\), and \(\pm\frac{\pi}{6}\). The HEGY test uses \(t\)-statistics for \(\pi_1\) and \(\pi_2\), and \(F\)-statistics for \(\{\pi_3,\pi_4\}\), \(\{\pi_5,\pi_6\}\), \(\{\pi_7,\pi_8\}\), \(\{\pi_9,\pi_{10}\}\), and \(\{\pi_{11},\pi_{12}\}\). Here, \(\pi_1\) and \(\pi_2\) correspond to the zero frequency (long-run trend) and \(\pi\), respectively, while \(\{\pi_3,\pi_4\}\), \(\{\pi_5,\pi_6\}\), \(\{\pi_7,\pi_8\}\), \(\{\pi_9,\pi_{10}\}\), and \(\{\pi_{11},\pi_{12}\}\) correspond to the frequencies \(\pm\frac{\pi}{2}\), \(\pm\frac{2\pi}{3}\), \(\pm\frac{\pi}{3}\), \(\pm\frac{5\pi}{6}\), and \(\pm\frac{\pi}{6}\), respectively. For example, the null hypothesis of the \(t\)-statistic used to test for a seasonal unit root at frequency \(\pi\) is \(H_0:\pi_2=0\), while the null hypothesis of the \(F\)-statistic used to test for seasonal unit roots at frequency \(\pm\frac{\pi}{2}\) is \(H_0:\pi_3=\pi_4=0\). For further details regarding the derivation of the regression equation and test statistics used in the HEGY test, see Beaulieu and Miron (1993).
+
+\subsection{Zivot-Andrews (ZA) Test}
+
+The Zivot--Andrews (ZA) unit root test, proposed by Zivot and Andrews (1992), extends conventional unit root tests by allowing for a single endogenous structural break in the time series. Unlike standard tests such as the Augmented Dickey--Fuller (ADF) and Phillips--Perron (PP) tests, which assume no structural breaks, the ZA test determines the break point endogenously from the data.
+
+\vspace{0.75cm}
+
+The test considers three alternative regression models depending on the nature of the structural break. Model A allows for a break in the intercept and is given by,
+\[
+y_t = \mu_A + \theta_A DU_t(\lambda) + \beta_A t + \alpha_A y_{t-1}
++ \sum_{i=1}^{k} c_i^{A} \Delta y_{t-i} + \varepsilon_t.
+\]
+Model B allows for a break in the trend and is specified as,
+\[
+y_t = \mu_B + \gamma_B DT_t^{*}(\lambda) + \beta_B t + \alpha_B y_{t-1}
++ \sum_{i=1}^{k} c_i^{B} \Delta y_{t-i} + \varepsilon_t,
+\]
+while Model C allows for breaks in both intercept and trend,
+\[
+y_t = \mu_C + \theta_C DU_t(\lambda) + \gamma_C DT_t^{*}(\lambda) + \beta_C t + \alpha_C y_{t-1}
++ \sum_{i=1}^{k} c_i^{C} \Delta y_{t-i} + \varepsilon_t.
+\]
+
+\vspace{0.75cm}
+
+The dummy variables capture the structural break. They are defined as \(DU_t(\lambda)=1\) if \(t > T\lambda\) and 0 otherwise, and \(DT_t^{*}(\lambda)=t - T\lambda\) if \(t > T\lambda\) and 0 otherwise, where \(\lambda \in (0,1)\) represents the candidate break fraction and \(T\lambda\) denotes the corresponding break date.
+
+\vspace{0.75cm}
+
+The null hypothesis of the ZA test assumes that the series contains a unit root with no structural break, while the alternative hypothesis assumes a trend-stationary process with a structural break. For each possible break point, an augmented Dickey--Fuller type t-statistic for the coefficient \(\alpha\) is computed. The Zivot--Andrews test statistic is then defined as
+\[
+t^{ZA} = \inf_{\lambda \in \Lambda} t_{\hat{\alpha}}(\lambda),
+\]
+which corresponds to the minimum (most negative) value of the t-statistic over all admissible break points.
+
+\vspace{0.75cm}
+
+The null hypothesis is rejected if the ZA test statistic is more negative than the corresponding critical value, indicating evidence of stationarity with a structural break. Otherwise, the null hypothesis cannot be rejected.
+	
+	\section{Conclusion}
+	
+	By today, unit root tests have significantly developed since the introduction of the Dickey-Fuller test in 1979. Although early methods focused only on simple autoregressive processes, modern approaches allow us to choose suitable unit root tests for any type of data, as they account for serial correlation, seasonal patterns, structural breaks, and more. Choosing an appropriate unit root test is very important for making reliable statistical inferences and for building time series models.
+	
+	\section*{References}
+	\begin{itemize}
+		\item Dickey, D. A., \& Fuller, W. A. (1979). Distribution of the estimators for autoregressive time series with a unit root. \textit{Journal of the American Statistical Association}, 74(366a), 427--431.
+		\item Said, S. E., \& Dickey, D. A. (1984). Testing for unit roots in autoregressive-moving average models of unknown order. \textit{Biometrika}, 71(3), 599--607.
+		\item Perron, P. and Ng, S. (1995). Unit root tests in ARMA models with data-dependent methods for the selection of the truncation lag. \textit{Journal of the American Statistical Association}, 90(429), 268--281.
+		\item Schwert, G. W. (2002). Tests for unit roots: A Monte Carlo investigation. \textit{Journal of Business \& Economic Statistics}, 20(1), 5--17.
+		\item Phillips, P. C. B., \& Perron, P. (1988). Testing for unit roots in time series regression. \textit{Biometrika}, 75, 335--346.
+		\item Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., \& Shin, Y. (1992). Testing the null hypothesis of stationarity against the alternative of a unit root. \textit{Journal of Econometrics}, 54, 159--178.
+		\item Hylleberg, S., Engle, R. F., Granger, C. W. J., \& Yoo, B. S. (1990). Seasonal integration and cointegration. \textit{Journal of Econometrics}, 44(1--2), 215--238.
+		\item Dickey, D. A., Hasza, D. P., \& Fuller, W. A. (1984). Testing for unit roots in seasonal time series. \textit{Journal of the American Statistical Association}, 79(386), 355--367.
+		\item Andrews, D. W. K., \& Zivot, E. (1992). Further evidence on the great crash, the oil price shock, and the unit-root hypothesis. \textit{Journal of Business \& Economic Statistics}, 10, 251--276.
+	\end{itemize}
+\end{document}

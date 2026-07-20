@@ -1,4 +1,4 @@
-# Unit Root Tests
+# Evolution of Unit Root Tests and Different Types
 
 A comprehensive analysis and implementation of unit root tests in time series econometrics.
 
@@ -40,8 +40,9 @@ Unit root tests are essential for:
 ## Further Reading
 
 For deeper understanding, explore:
-- Dickey & Fuller (1979) - Original ADF test
-- Phillips & Perron (1988) - PP test developments
-- Kwiatkowski et al. (1992) - KPSS test
-- Recent surveys on unit root testing advances
+- Dickey, D. A., & Fuller, W. A. (1979). Distribution of the estimators for autoregressive time series with a unit root. Journal of the American Statistical Association, 74(366a), 427–431.
+- Phillips, P. C. B., & Perron, P. (1988). Testing for unit roots in time series regression. Biometrika, 75, 335–346.
+-  Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., & Shin, Y. (1992). Testing the null hypothesis of stationarity against the alternative of a unit root. Journal of
+Econometrics, 54, 159–178.
+- Hylleberg, S., Engle, R. F., Granger, C. W. J., & Yoo, B. S. (1990). Seasonal integration and cointegration. Journal of Econometrics, 44(1–2), 215–238.
 
